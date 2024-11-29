@@ -1,0 +1,22 @@
+<div class="container">
+<%= link_to "Create new poll", new_poll_path, class: "btn btn-primary text-light text-decoration-none mt-4 rounded-pill px-4 py-2 shadow-sm" %>
+
+  <% content_for :title, "Polls" %>
+
+  <h1>Polls</h1>
+
+  <div id="polls" class="row">
+    <% @polls.each do |poll| %>
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <%= render poll, answers: @answers %>
+            <p>
+              <%= link_to "Show this poll", poll, class: "btn btn-primary text-light text-decoration-none mt-4 rounded-pill px-4 py-2 shadow-sm" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<%= form_with(model: poll) do |form| %>
+  <% if poll.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
+
+      <ul>
+        <% poll.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :question, style: "display: block" %>
+    <%= form.text_field :title %>
+    
+   <h3>Answers</h3>
+    <div id="answers">
+      <%= form.fields_for :answers do |answer_form| %>
+        <div class="answer-fields">
+          <%= render 'answer_fields', answer_form: answer_form %>
+        </div>
+      <% end %>
+    </div>
+      <%= link_to "Add Answer", "#", id: "add-answer", data: { 
+        template: raw(form.fields_for(:answers, poll.answers.build) { |answer_form| render('answer_fields', answer_form: answer_form) }) 
+      } %>
+  </div>
+  <div>
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
