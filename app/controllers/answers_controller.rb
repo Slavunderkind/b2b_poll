@@ -65,6 +65,6 @@ class AnswersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def answer_params
-      params.expect(answer: [ :name, :votes, :user_ids, :poll_id ])
+      params.expect(answer: [ :name, :votes, :poll_id ])
     end
 end

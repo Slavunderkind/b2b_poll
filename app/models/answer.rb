@@ -3,8 +3,6 @@ class Answer < ApplicationRecord
 
   validates :name, presence: true
 
-  serialize :user_ids, type: Array, coder: JSON
-
   def vote
     increment!(:votes)
   end
