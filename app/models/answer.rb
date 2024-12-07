@@ -5,20 +5,8 @@ class Answer < ApplicationRecord
 
   serialize :user_ids, type: Array, coder: JSON
 
-  def vote(user_id)
-    add_user(user_id)
+  def vote
     increment!(:votes)
-
-    mail = UsersMailer.after_voting_email(user_id, poll.id)
-    # mail.deliver_later
-    mail.deliver_now
-  end
-
-
-  def add_user(user_id)
-    self.user_ids << user_id
-    self.user_ids.uniq! # Ensure no duplicates
-    save
   end
 
   def percentage

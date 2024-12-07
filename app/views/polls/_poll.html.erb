@@ -5,7 +5,7 @@
       <%= form_with url: poll_vote_path(poll), method: "post", class: "form" do |form| %>
         <% poll.answers&.each do |answer| %>
           <div class="form-check mb-2">
-            <% unless poll.voted_by?(current_user&.id) %>
+            <% unless poll.voted_by?(current_user) %>
               <%= radio_button_tag :answer_id, answer.id, false, class: "form-check-input" %>
               <label class="form-check-label text-light" for="answer_id_<%= answer.id %>">
                 <%= answer.name %>
@@ -24,7 +24,7 @@
           <strong>Total votes:</strong> <%= poll.total_votes %>
         </p>
 
-        <% if poll.voted_by?(current_user&.id) %>
+        <% if poll.voted_by?(current_user) %>
           <div class="alert alert-success mt-3" role="alert">
             You already voted for this poll!
           </div>

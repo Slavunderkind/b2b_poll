@@ -1,7 +1,7 @@
 class PollsController < ApplicationController
   before_action :authenticate_user!, only: %i[vote]
 
-  before_action :set_poll, only: %i[ show edit update destroy]
+  before_action :set_poll, only: %i[show edit update destroy]
 
   # GET /polls or /polls.json
   def index
@@ -51,10 +51,11 @@ class PollsController < ApplicationController
   end
 
   def vote
+    @poll = Poll.find(params.require(:poll_id))
     @answer = Answer.find(params[:answer_id])
-    @answer.vote(current_user.id)
+    @poll.vote(current_user.id, @answer)
 
-    redirect_to poll_path(@answer.poll), notice: "Thank you for voting!"
+    redirect_to poll_path(@poll), notice: "Thank you for voting!"
   end
 
   # DELETE /polls/1 or /polls/1.json
