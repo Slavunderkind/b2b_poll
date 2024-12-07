@@ -52,11 +52,7 @@ class PollsController < ApplicationController
 
   def vote
     @answer = Answer.find(params[:answer_id])
-    @answer.add_user(current_user.id)
-    @answer.increment!(:votes)
-
-    mail = UsersMailer.after_voting_email(current_user.id, @answer.poll.id)
-    mail.deliver_later
+    @answer.vote(current_user.id)
 
     redirect_to poll_path(@answer.poll), notice: "Thank you for voting!"
   end

@@ -1,5 +1,5 @@
 class UsersMailer < ActionMailer::Base
-def after_voting_email(user_id, poll_id)
+  def after_voting_email(user_id, poll_id)
     @user = User.find(user_id)
     @poll = Poll.find(poll_id)
 
