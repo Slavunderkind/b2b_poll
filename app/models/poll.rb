@@ -9,11 +9,9 @@ class Poll < ApplicationRecord
 
   def vote(user_id, answer)
     answer.vote
-    Vote.create(user: User.find(user_id), poll: self)
+    Vote.create!(user_id: user_id, poll_id: id)
 
-    mail = UsersMailer.after_voting_email(user_id, id)
-    # mail.deliver_later
-    mail.deliver_now
+    UsersMailer.after_voting_email(user_id, id).deliver_later
   end
 
   def voted_by?(user)
