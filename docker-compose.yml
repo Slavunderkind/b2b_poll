@@ -6,7 +6,28 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rake db:migrate && rails server -b 0.0.0.0"
     volumes:
       - .:/app
+      - db:/app/db
     ports:
       - "3000:3000"
     environment:
       RAILS_ENV: development
+    depends_on:
+      - redis
+      - sidekiq
+
+  redis:
+    image: redis:latest
+    command: redis-server
+    ports:
+      - "6379:6379"
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+      - db:/app/db
+    environment:
+      RAILS_ENV: development
+volumes:
+  db:
+    driver: local
