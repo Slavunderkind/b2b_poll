@@ -10,8 +10,6 @@ class Poll < ApplicationRecord
   def vote(user_id, answer)
     answer.vote
     Vote.create!(user_id: user_id, poll_id: id)
-    Rails.logger.info("User id is #{user_id} and poll id is #{id}")
-    UsersMailer.after_voting_email(user_id, id).deliver_later
   end
 
   def voted_by?(user)

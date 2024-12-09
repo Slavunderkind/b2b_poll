@@ -16,7 +16,6 @@ services:
       SMTP_PASSWORD: Thisisatestingaccount123
     depends_on:
       - redis
-      - sidekiq
   redis:
     image: redis:latest
     command: redis-server
@@ -33,6 +32,8 @@ services:
       DOCKERIZED: true
       SMTP_USERNAME: slavunderkindtest@gmail.com
       SMTP_PASSWORD: Thisisatestingaccount123
+    depends_on:
+      - redis
 volumes:
   db:
     driver: local
