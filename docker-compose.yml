@@ -12,8 +12,9 @@ services:
     environment:
       RAILS_ENV: development
       DOCKERIZED: true
-      SMTP_USERNAME: slavunderkindtest@gmail.com
-      SMTP_PASSWORD: Thisisatestingaccount123
+      SMTP_USERNAME: someMagicalEmail@gmail.com
+      SMTP_PASSWORD: withAMagicalPassword
+      DELAY_JOB_TIME: 10
     depends_on:
       - redis
   redis:
@@ -30,8 +31,7 @@ services:
     environment:
       RAILS_ENV: development
       DOCKERIZED: true
-      SMTP_USERNAME: slavunderkindtest@gmail.com
-      SMTP_PASSWORD: Thisisatestingaccount123
+      DELAY_JOB_TIME: 10
     depends_on:
       - redis
 volumes:

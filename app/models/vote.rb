@@ -11,6 +11,6 @@ class Vote < ApplicationRecord
   def enqueue_email_job
     Rails.logger.info("User id is #{self.user_id} and poll id is #{self.poll_id}")
 
-    UsersMailer.after_voting_email(self.user_id, self.poll_id).deliver_later(queue: 'mailers')
+    EmailJob.perform_in(Rails.application.config.delay_job_time, self.user_id, self.poll_id)
   end
 end
