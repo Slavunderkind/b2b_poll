@@ -1,11 +1,11 @@
 class PollsController < ApplicationController
   before_action :authenticate_user!, only: %i[vote]
-
+  before_action :authenticate_admin_user!, only: %i[new create]
   before_action :set_poll, only: %i[show edit update destroy]
 
   # GET /polls or /polls.json
   def index
-    @polls = Poll.all
+    @polls = Poll.order(created_at: :desc)
   end
 
   # GET /polls/1 or /polls/1.json
@@ -28,8 +28,8 @@ class PollsController < ApplicationController
 
     respond_to do |format|
       if @poll.save
-        format.html { redirect_to @poll, notice: "Poll was successfully created." }
-        format.json { render :show, status: :created, location: @poll }
+        format.html { redirect_to polls_path, notice: "Poll was successfully created." }
+        format.json { render :index, status: :created, location: @poll }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @poll.errors, status: :unprocessable_entity }
