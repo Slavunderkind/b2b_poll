@@ -3,6 +3,8 @@ class UsersMailer < ApplicationMailer
     @user = User.find(user_id)
     @poll = Poll.find(poll_id)
 
+    return unless @user && @poll
+
     mail(to: @user.email,
             subject: "Thank you for your vote!"
     ) do |format|
